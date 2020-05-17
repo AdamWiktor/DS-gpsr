@@ -1,0 +1,28 @@
+Solution by Adam Wiktor
+
+My solution consists of five modules:
+1. Gpsr
+2. Transmitter
+3. MsgQueue
+4. Neighbors
+5. RadioStart
+
+1. Gpsr module reads recipient and reading every 5 seconds, creates message and
+delegates sending it to Transmitter
+
+2. Transmitter broadcasts own location every 10 seconds, receives broadcast and
+readings messages from other motes and sends readings' messages to other motes
+
+3. MsgQueue holds a queue of readings' messages to send and keeps track of
+retransmissions (and deletes old messages if there were too many of them)
+
+4. Neighbors knows own location and locations of neighbors, and routes messages
+according to gpsr protocol
+
+5. RadioStart module was copied from tiny-os example code, but it contains only
+one line of actual code (`call RadioControl.start();`), so I hope it is allowed
+
+During development I have found an interesting bug in TOSSIM (I am not sure if
+it is a known bug, or maybe it is a feature?). When creating a variable inside
+a header file *.h, TOSSIM treats this variable as a global variable for a whole
+simulation, which allows unwanted communication between motes.
